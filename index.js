@@ -1,7 +1,8 @@
+import "dotenv/config";
 import express from "express";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -9,7 +10,6 @@ let teaData = [];
 let nextID = 1;
 
 //add a new tea
-
 app.post("/teas", (req, res) => {
   const { name, price } = req.body;
   const newTea = { id: nextID++, name, price };
@@ -18,13 +18,11 @@ app.post("/teas", (req, res) => {
 });
 
 //get all tea
-
 app.get("/teas", (req, res) => {
   res.status(200).send(teaData);
 });
 
 //get a tea with id
-
 app.get("/teas/:id", (req, res) => {
   const tea = teaData.find((t) => t.id === parseInt(req.params.id));
   if (!tea) {
@@ -34,7 +32,6 @@ app.get("/teas/:id", (req, res) => {
 });
 
 //update tea
-
 app.put("/teas/:id", (req, res) => {
   // const teaId = req.params.id;
   const tea = teaData.find((t) => t.id === parseInt(req.params.id));
